@@ -47,7 +47,7 @@ public class DaysOffSetterSaveCSV {
                 	if(s[0].contentEquals(update)) {
                 		s[1] = String.valueOf(switcher);
                 		s[2] = String.valueOf(numdays);
-                		//readed.remove(s);
+                		//to remove row: readed.remove(s);
                 		break;
                 		
                 	}
