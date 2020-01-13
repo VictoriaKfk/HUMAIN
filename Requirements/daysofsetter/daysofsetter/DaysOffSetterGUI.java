@@ -3,9 +3,9 @@ package daysofsetter;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Window.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -19,24 +19,29 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+import com.opencsv.exceptions.CsvException;
+
 
 public class DaysOffSetterGUI extends JFrame {
 	/**
 	 * 
 	 */
-	DaysOffSetter dos = new DaysOffSetter();
-	
-	protected void runGUI() {
+	private static final long serialVersionUID = 8422771868703335496L;
+	/**
+	 * 
+	 */
+	protected DaysOffSetter runGUI(DaysOffSetter dos) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DaysOffSetterGUI frame = new DaysOffSetterGUI();
+					DaysOffSetterGUI frame = new DaysOffSetterGUI(dos);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		return dos;
 	}
 	
 	private JPanel frmPreferences;
@@ -53,7 +58,7 @@ public class DaysOffSetterGUI extends JFrame {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public DaysOffSetterGUI() {
+	public DaysOffSetterGUI(DaysOffSetter dos) {
 		setBounds(100, 100, 395, 268);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setType(Type.POPUP);
@@ -169,30 +174,45 @@ public class DaysOffSetterGUI extends JFrame {
 						dos.setWorkfromHomeDaysOff(true);
 					}
 					
-					if(maxDaysOffMonth.getText() != null) {
+					if(!maxDaysOffMonth.getText().isEmpty()) {
 						String days = maxDaysOffMonth.getText();
 						int DaysOffMonth = Integer.parseInt(days);
 						dos.setMaxNumDaysoff(DaysOffMonth);
 					}
 					
-					if(maxFieldDaysMonth.getText() != null) {
+					if(!maxFieldDaysMonth.getText().isEmpty()) {
 						String days = maxFieldDaysMonth.getText();
 						int FieldDaysMonth = Integer.parseInt(days);
 						dos.setMaxNumFieldWorkDays(FieldDaysMonth);
 					}
 					
-					if(maxSickDaysMonth.getText() != null) {
+					if(!maxSickDaysMonth.getText().isEmpty()) {
 						String days = maxSickDaysMonth.getText();
 						int SickDaysMonth = Integer.parseInt(days);
 						dos.setMaxNumSickDaysoff(SickDaysMonth);
 					}
 					
-					if(maxWorkHomeDaysMonth.getText() != null) {
+					if(!maxWorkHomeDaysMonth.getText().isEmpty()) {
 						String days = maxWorkHomeDaysMonth.getText();
 						int WorkHomeDaysMonth = Integer.parseInt(days);
 						dos.setMaxNumFieldWorkDays(WorkHomeDaysMonth);
 					}
 					
+					
+					try {
+						DaysOffSetterCSV.updateCSV("FieldWorkDays", dos.isFieldWorkDays(), dos.getMaxNumFieldWorkDays());
+						DaysOffSetterCSV.updateCSV("DaysOff", dos.isDaysOff(), dos.getMaxNumDaysoff());
+						DaysOffSetterCSV.updateCSV("AbsenceSick", dos.isSickDaysOff(), dos.getMaxNumSickDaysoff());
+						DaysOffSetterCSV.updateCSV("WorkfromHome", dos.isFieldWorkDays(), dos.getMaxNumWorkfromHomeDaysOff());
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (CsvException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			
+
 					System.exit(0);
 					
 				}
@@ -203,3 +223,4 @@ public class DaysOffSetterGUI extends JFrame {
 	} 
 
 }
+
