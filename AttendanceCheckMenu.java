@@ -16,20 +16,32 @@ import javax.swing.border.BevelBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
+
 /*After log in, the user must select the "Just arrived" RadioBox and on his way out, he must select the "I'm leaving" RadioBox*/
 public class AttendanceCheckMenu extends JFrame { // this GUI frame is going to pop up 2 times per working day (at the beginning and at the end of each one)
 
 	private JPanel contentPane;
 	Calendar cal = Calendar.getInstance();
 	static int arrivaltime, exittime = 0;
-	static int daysOfWeek = 0; //continue counting!!! (maybe using fields)
+	static int daysOfWeek = 0; //continue counting!!! (using fields)
 	static int totalWeekHours = 0;
 	static int monthsOfYear = 0;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) { //TODO declare lists and tables...
+	public static void main(String[] args) throws  IOException, CsvException { //TODO declare lists and tables...
 		
 		ArrayList<Integer> weekHours = new ArrayList<Integer>(7);
 		ArrayList<Integer> seasonHours = new ArrayList<Integer>(12);
@@ -39,20 +51,7 @@ public class AttendanceCheckMenu extends JFrame { // this GUI frame is going to 
 		
 		AttendanceTracker at = new AttendanceTracker(2439, weekHours, seasonHours, seasonHoursLeft, seasonFullDayAbsences, weekFullDayAbsences);
 		at.displayDailyProgramm();
-		while(true) {
-			at.weekTracker(hoursPerDay());
-			daysOfWeek++;
-			if (daysOfWeek == 6) {
-				for (int i = 0; i <= 6; i++) {
-					totalWeekHours += weekHours.get(i);
-				}
-				at.seasonTracker(totalWeekHours, monthsOfYear);
-				monthsOfYear++;
-			}
-			if (monthsOfYear == 11) {
-				break;
-			}
-		}
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -63,6 +62,26 @@ public class AttendanceCheckMenu extends JFrame { // this GUI frame is going to 
 				}
 			}
 		});
+		while(true) {
+			at.weekTracker(hoursPerDay());
+			daysOfWeek++;
+			if (daysOfWeek == 6) {
+				for (int i = 0; i <= 6; i++) {
+					totalWeekHours += weekHours.get(i);
+				}
+				at.seasonTracker(totalWeekHours, monthsOfYear);
+				monthsOfYear++;
+				daysOfWeek = 0;
+				break;
+			}
+			for (int countcsv = 1; countcsv <= 12; countcsv++) { //TODO read the ID from csv (maybe in other "main" class)
+			updateCSV("hr2", String.valueOf(monthsOfYear), seasonHoursLeft.get(countcsv), seasonHours.get(countcsv));
+	    	readCSV();
+			}
+			if (monthsOfYear == 11) {
+				monthsOfYear = 0;
+			}
+		}
 	}
 
 	/**
@@ -124,5 +143,41 @@ public class AttendanceCheckMenu extends JFrame { // this GUI frame is going to 
 		 return totalDayH;
 	 }
 	 
-	
-}
+	 
+	 	/**
+		 * Reading and editing CSV.
+		 */
+	 
+	 static String filename = "AttendanceCSV.csv";
+		static Path pathToFile = Paths.get(filename);
+		
+	 public static List<String[]> readCSV() throws IOException, CsvException {
+	    	try (
+	                Reader reader = Files.newBufferedReader(pathToFile.toAbsolutePath());
+	                CSVReader csvReader = new CSVReader(reader);
+	            ) {
+	            	List<String[]> records = csvReader.readAll();
+	            	return records;
+	            }
+	            
+	    } 
+	    
+	    public static void updateCSV(String ID, String month, int hoursLeft, int hoursWorked) throws IOException, CsvException {
+	    	List<String[]> readed = readCSV();
+	        try (
+	        		CSVWriter writer = new CSVWriter(new FileWriter(filename, false));
+	            ) {
+	                for(String[] s: readed) {
+	                	if(s[0].contentEquals(ID) && s[1].contentEquals(month)) {
+	                		s[2] = String.valueOf(hoursLeft);
+	                		s[3] = String.valueOf(hoursWorked);
+	                		//to remove row: readed.remove(s);
+	                		break;
+	                		
+	                	}
+	                }
+	                
+	                writer.writeAll(readed);
+	        }
+	    }
+	}	
