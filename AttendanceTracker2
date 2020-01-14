@@ -1,7 +1,42 @@
 
 public class AttendanceTracker2 {
 	
-	static int daysOfWeek = 0; 
-	static int totalWeekHours = 0;
-	static int monthsOfYear = 0;
+	 /**
+	  * class for keeping and using the days of every week (counter),
+	  * total hours worked per week and the months of every year (counter), in order to have a real-time application
+	  */
+	
+	 private int daysOfWeek;
+	 private int totalWeekHours;
+	 private int monthsOfYear;
+	
+	public AttendanceTracker2(int dow, int twh, int moy) {
+		daysOfWeek = dow;
+		totalWeekHours = twh;
+		monthsOfYear = moy;
+	}
+
+	public int getDaysOfWeek() {
+		return daysOfWeek;
+	}
+
+	public void setDaysOfWeek(int daysOfWeek) {
+		this.daysOfWeek = daysOfWeek;
+	}
+
+	public int getTotalWeekHours() {
+		return totalWeekHours;
+	}
+
+	public void setTotalWeekHours(int totalWeekHours) {
+		this.totalWeekHours = totalWeekHours;
+	}
+
+	public int getMonthsOfYear() {
+		return monthsOfYear;
+	}
+
+	public void setMonthsOfYear(int monthsOfYear) {
+		this.monthsOfYear = monthsOfYear;
+	}
 }
