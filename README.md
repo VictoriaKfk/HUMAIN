@@ -1,6 +1,7 @@
 # HUMAIN
 ERP module - HR - sofware<br>
 HR tool for managing employee data. It provides full access for HR personel and restricted access to other employees in order to monitor, update or insert data regarding employees.
+Here is a link to have a small taste of how HUMAIN works. https://www.youtube.com/watch?v=71hiVZaU1sM
 
 ## How To Run
 
@@ -23,7 +24,7 @@ Simple user
 username : kate,
 password : kate
 
-There are more records on the database if you wish to run the project with different inputs (find...)
+There are more records on the database if you wish to run the project with different inputs (find /data/empoyee.csv , /data/user.csv)
 ### Data to sign up :
 
 In order to successfully sign up to HUMAIN the user should enter the unique ID (given by the company). Every department has a prefix for the ids (e.g the Human Resources department employee/user ids starts with hr and it's followed by an integer number)
@@ -43,13 +44,19 @@ You can now
 
 
 5.After this you can go to the Search Area (right to the Load Employee Data Button) and type keywords. The table, after this filtering, shows only the records including these keywords. 
-ATTENTION! You have to go to the Search Area ### AFTER going through all the others functionalities otherwise you won't be able to check them after the filtering.
+ATTENTION! You have to go to the Search Area AFTER going through all the others functionalities otherwise you won't be able to check them after the filtering.
 
 6.There is also the ability to check the signed-in user profile by clicking My profile Button.
 
 ### Navigation through the User dashboard :
 
 On the left side there is the user's personal information and on the right you can load your colleagues data (the employees that work in the same department with the user) by clicking on the Load Colleagues. 
+
+## Other files in this repository :
+
+There are also some other classes in the repo which are meant to be incorporated but that hasn't been done yet. So you won't be able to go through their functionalities while executing the above main code. These classes represent early stages of extra ideas and functionalities we came up with for this project. Their incorporation to the main code is coming soon. (these files are )
+
+
 
 
 
