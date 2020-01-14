@@ -54,7 +54,8 @@ On the left side there is the user's personal information and on the right you c
 
 ## Other files in this repository :
 
-There are also some other classes in the repo which are meant to be incorporated but that hasn't been done yet. So you won't be able to go through their functionalities while executing the above main code. These classes represent early stages of extra ideas and functionalities we came up with for this project. Their incorporation to the main code is coming soon. (these files are )
+There are also some other classes in the repo which are meant to be incorporated but that hasn't been done yet. So you won't be able to go through their functionalities while executing the above main code. These classes represent early stages of extra ideas and functionalities we came up with for this project. Their incorporation to the main code is coming soon. (these files are Absence.java,AbsenceTest.java,AttendanceApp,AttendanceCSV,AttendanceCheckMenu.java,	AttendanceTracker.java,	CSVabsence.java, Calendar.java,	CalendarTest.java, Daysoff.java, DaysoffTest.java	, MainClass.java, Payroll2.java, Payroll2Test.java,	
+payroll_attendance.csv)
 
 
 
