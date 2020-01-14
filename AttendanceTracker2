@@ -1,0 +1,7 @@
+
+public class AttendanceTracker2 {
+	
+	static int daysOfWeek = 0; 
+	static int totalWeekHours = 0;
+	static int monthsOfYear = 0;
+}
