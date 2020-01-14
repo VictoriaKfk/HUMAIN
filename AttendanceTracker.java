@@ -8,11 +8,11 @@ public class AttendanceTracker {
 	public int monthsOfYear;
 	
 	private String ID; 
-	private static ArrayList<Integer> weekHours = new ArrayList<Integer>(7); // ArrayList saving weekly working hours of an employee
-	private static ArrayList<Integer> seasonHours = new ArrayList<Integer>(12); // ArrayList saving monthly working hours of an employee for a season
-	private static ArrayList<Integer> seasonHoursLeft = new ArrayList<Integer>(12); // ArrayList saving monthly working hours an employee was absent, for a season (with delays also)
-	private static ArrayList<Integer> seasonFullDayAbsences = new ArrayList<Integer>(12); // ArrayList saving whole days per month an employee was absent
-	private static ArrayList<Integer> weekFullDayAbsences = new ArrayList<Integer>(7); // ArrayList saving whole days per week an employee was absent
+	public static ArrayList<Integer> weekHours = new ArrayList<Integer>(7); // ArrayList saving weekly working hours of an employee
+	public static ArrayList<Integer> seasonHours = new ArrayList<Integer>(12); // ArrayList saving monthly working hours of an employee for a season
+	public static ArrayList<Integer> seasonHoursLeft = new ArrayList<Integer>(12); // ArrayList saving monthly working hours an employee was absent, for a season (with delays also)
+	public static ArrayList<Integer> seasonFullDayAbsences = new ArrayList<Integer>(12); // ArrayList saving whole days per month an employee was absent
+	public static ArrayList<Integer> weekFullDayAbsences = new ArrayList<Integer>(7); // ArrayList saving whole days per week an employee was absent
 
 	public AttendanceTracker(String ID) { //constructor with ID only
 		this.ID = ID;
