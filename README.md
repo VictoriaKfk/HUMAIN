@@ -54,7 +54,7 @@ On the left side there is the user's personal information and on the right you c
 
 ## Extra Classes :
 
-There are also some other classes in the repo which are meant to be incorporated but that hasn't been done yet. So you won't be able to go through their functionalities while executing the above main code. These classes represent early stages of extra ideas and functionalities we came up with for this project. Their incorporation to the main code is coming soon.
+In the package ExtraClasses there are some additional classes which are meant to be incorporated, but that hasn't been done yet. So you won't be able to go through their functionalities while executing the above main code. These classes represent early stages of extra ideas and functionalities we came up with for this project. Their incorporation to the main code is coming soon.
 
 ## JUnit Test Classes :
 
