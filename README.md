@@ -52,11 +52,13 @@ ATTENTION! You have to go to the Search Area AFTER going through all the others 
 
 On the left side there is the user's personal information and on the right you can load your colleagues data (the employees that work in the same department with the user) by clicking on the Load Colleagues. 
 
-## Other files in this repository :
+## Extra Classes :
 
-There are also some other classes in the repo which are meant to be incorporated but that hasn't been done yet. So you won't be able to go through their functionalities while executing the above main code. These classes represent early stages of extra ideas and functionalities we came up with for this project. Their incorporation to the main code is coming soon. (these files are Absence.java,AbsenceTest.java,AttendanceApp,AttendanceCSV,AttendanceCheckMenu.java,	AttendanceTracker.java,	CSVabsence.java, Calendar.java,	CalendarTest.java, Daysoff.java, DaysoffTest.java	, MainClass.java, Payroll2.java, Payroll2Test.java,	
-payroll_attendance.csv)
+There are also some other classes in the repo which are meant to be incorporated but that hasn't been done yet. So you won't be able to go through their functionalities while executing the above main code. These classes represent early stages of extra ideas and functionalities we came up with for this project. Their incorporation to the main code is coming soon.
 
+## JUnit Test Classes :
+
+Include the junit tests cases that can be conducted for this project. They are splitted in two packages: 1. junit_Main_Project: for the main project classes, 2.junit_Side_Classes: for the Extra classes.
 
 
 
