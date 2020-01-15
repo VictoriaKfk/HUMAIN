@@ -1,9 +1,14 @@
 package setAttendance;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.opencsv.exceptions.CsvException;
+
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
@@ -11,24 +16,26 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class Absence extends JFrame implements ActionListener {
+public class Absence extends JFrame  {
 
 	private JPanel contentPane;
-	private JTextField txtAbsence;
+	private JLabel txtAbsence;
     private JCheckBox chckbxSick, chckbxDayOff, chckbxWorkFromHome, chckbxFieldWork;
     private JButton btnOk;
-    Daysoff d1 = new Daysoff(2439);
-	Daysoff d2 = new Daysoff(2439);
-	Daysoff d3 = new Daysoff(2439);
-	Daysoff d4 = new Daysoff(2439);
+    Daysoff d1 = new Daysoff("hr2");
+    CSVabsence csva = new CSVabsence();
+	int i1;
+	int i2;
+	int i3;
+	
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public void runGUI() {
 		
-	    Daysoff dcsv = new Daysoff(2439);
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -40,8 +47,7 @@ public class Absence extends JFrame implements ActionListener {
 				}
 			}
 		});
-		Daysoff.updateCSV(ID, month, dcsv.countabsences(Daysoff.seasonFullDayAbsences), dcsv.JustifiedAbsence);
-    	Daysoff.readCSV();
+		
 	}
 
 	/**
@@ -56,13 +62,13 @@ public class Absence extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		txtAbsence = new JTextField();
+		txtAbsence = new JLabel();
 		txtAbsence.setFont(new Font("Arial", Font.BOLD, 18));
 		txtAbsence.setBackground(Color.GRAY);
 		txtAbsence.setText("Absence");
 		txtAbsence.setBounds(161, 13, 85, 40);
 		contentPane.add(txtAbsence);
-		txtAbsence.setColumns(10);
+		//txtAbsence.setColumns(10);
 		
 		JCheckBox chckbxSick = new JCheckBox("Sick");
 		chckbxSick.setBackground(Color.GRAY);
@@ -94,35 +100,42 @@ public class Absence extends JFrame implements ActionListener {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == btnOk ) {
+					
+					if (chckbxSick.isSelected()) {  
+				    	i1 = d1.countdaysoff(d1.maxDO);
+				    	i2 = d1.absenceSick();
+						i3 = d1.justifiedAbsence(d1.JustifiedAbsence);
+						System.out.println(i1 +","+ i2  +","+ i3);
+				     }  else if (chckbxDayOff.isSelected()){ 
+						i1 = d1.countdaysoff(d1.maxDO);
+						System.out.println(i1);
+				     }  else if (chckbxWorkFromHome.isSelected()) {
+				    	 i1 = d1.countabsences(Daysoff.seasonFullDayAbsences);
+				    	 i2 = d1.workFromHome();
+				    	 i3 = d1.justifiedAbsence(d1.JustifiedAbsence);
+				    	 System.out.println(i1 +","+ i2 +","+ i3);
+				     } else if (chckbxFieldWork.isSelected()) {
+				    	 i1 = d1.countabsences(Daysoff.seasonFullDayAbsences);
+				    	 i2 = d1.workField();
+				    	 i3 = d1.justifiedAbsence(d1.JustifiedAbsence);
+				    	 System.out.println(i1 +","+ i2 +","+ i3);
+				     }
+					
+					try {
+						csva.updateCSV("hr2", "5", i1, i3);
+					} catch (IOException | CsvException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					System.exit(0);
 				}
 			}
 		});
 		btnOk.setBounds(323, 228, 97, 25);
 		contentPane.add(btnOk);
+		
+		JLabel lblCheckOnlyOne = new JLabel("Check only one option");
+		lblCheckOnlyOne.setBounds(138, 45, 133, 16);
+		contentPane.add(lblCheckOnlyOne);
 	}
-	public void actionPerformed(ActionEvent e) { 
-		if (e.getSource() == btnOk ) {
-			System.exit(0);
-		}
-	     if (chckbxSick.isSelected()) {  
-	    	d1.countdaysoff(d1.daysoff);
-	    	d1.AbsenceSick();
-			d1.JustifiedAbsence(d1.JustifiedAbsence);
-			System.out.println(d1.countdaysoff(d1.daysoff) + d1.AbsenceSick() + d1.JustifiedAbsence(d1.JustifiedAbsence));
-	     }  else if (chckbxDayOff.isSelected()){ 
-			d2.countdaysoff(d2.daysoff);
-			System.out.println(d2.countdaysoff(d2.daysoff));
-	     }  else if (chckbxWorkFromHome.isSelected()) {
-	    	 d3.countabsences(Daysoff.seasonFullDayAbsences);
-	    	 d3.WorkFromHome();
-	    	 d3.JustifiedAbsence(d3.JustifiedAbsence);
-	    	 System.out.println( d3.countabsences(Daysoff.seasonFullDayAbsences)+ d3.WorkFromHome() + d3.JustifiedAbsence(d3.JustifiedAbsence));
-	     } else if (chckbxFieldWork.isSelected()) {
-	    	 d4.countabsences(Daysoff.seasonFullDayAbsences);
-	    	 d4.WorkField();
-	    	 d4.JustifiedAbsence(d4.JustifiedAbsence);
-	    	 System.out.println(d4.countabsences(Daysoff.seasonFullDayAbsences) + d4.WorkField() + d4.JustifiedAbsence(d4.JustifiedAbsence));
-	     }
-   }
 }

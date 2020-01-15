@@ -1,27 +1,22 @@
 package setAttendance;
+
+
 import java.util.ArrayList;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-
-import com.opencsv.CSVReader;
-import com.opencsv.CSVWriter;
-import com.opencsv.exceptions.CsvException;
 
 public class Daysoff extends AttendanceTracker {
 	
 	public int daysoff;
-	public int JustifiedAbsence = 0;
-	public int AbsenceSick = 0;
-	public int WorkFromHome = 0;
-	public int WorkField = 0;
+	public static int maxDO = 0;
+	public static int maxAS = 0;
+	public static int maxWFH = 0;
+	public static int maxWF= 0;
+	public static int JustifiedAbsence = 0;
+	public static int AbsenceSick = 0;
+	public static int WorkFromHome = 0;
+	public static int WorkField = 0;
 	
-	public Daysoff(int ID) {
+	
+	public Daysoff(String ID) {
 		super(ID);
 		// TODO Auto-generated constructor stub
 	}
@@ -35,11 +30,11 @@ public class Daysoff extends AttendanceTracker {
 		return daysoff;
 	}
 	
-	public int countdaysoff(int daysoff) {
-		daysoff--;
-		return daysoff;
+	public int countdaysoff(int maxDO) {
+		maxDO--;
+		return maxDO;
 	}
-	public int countabsences(ArrayList<Integer> seasonFullDayAbsences) {
+	public static int countabsences(ArrayList<Integer> seasonFullDayAbsences) {
 		int absences = 0;
 		for (int i=0; i<=11; i++) {
 			absences = seasonFullDayAbsences.get(i);
@@ -48,55 +43,23 @@ public class Daysoff extends AttendanceTracker {
 		return absences;
 	}
 
-	public int JustifiedAbsence (int JustifiedAbsence) {
+	public static int justifiedAbsence(int JustifiedAbsence) {
 		JustifiedAbsence += AbsenceSick + WorkFromHome + WorkField;
 		return JustifiedAbsence;	
 	}
-	public int AbsenceSick() {
+	public int absenceSick() {
 		AbsenceSick++;
 		return AbsenceSick;
 	}
-	public int WorkFromHome() {
+	public int workFromHome() {
 		WorkFromHome++;
 		return WorkFromHome;
 	}
-	public int WorkField() {
+	public int workField() {
 		WorkField++;
 		return WorkField;
 	}
 	
-	
-	static String filename = "requierments.csv";
-	static Path pathToFile = Paths.get(filename);
-	
-	public static List<String[]> readCSV() throws IOException, CsvException {
-    	try (
-                Reader reader = Files.newBufferedReader(pathToFile.toAbsolutePath());
-                CSVReader csvReader = new CSVReader(reader);
-            ) {
-            	List<String[]> records = csvReader.readAll();
-            	return records;
-            }
-            
-    } 
-    
-    public static void updateCSV(String ID, String month, int notJ, int JA) throws IOException, CsvException {
-    	List<String[]> readed = readCSV();
-        try (
-        		CSVWriter writer = new CSVWriter(new FileWriter(filename, false));
-            ) {
-                for(String[] s: readed) {
-                	if(s[0].contentEquals(ID) && s[1].contentEquals(month)) {
-                		s[6] = String.valueOf(notJ);
-                		s[7] = String.valueOf(JA);
-                		//to remove row: readed.remove(s);
-                		break;
-                		
-                	}
-                }
-                
-                writer.writeAll(readed);
-        }
-    }
+
 }	
 
